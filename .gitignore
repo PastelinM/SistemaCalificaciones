@@ -1,0 +1,23 @@
+# ==========================================
+# REGLAS DE SEGURIDAD (¡Muy Importante!)
+# ==========================================
+# Ignorar la configuración local que tiene la contraseña de PostgreSQL
+appsettings.json
+
+# ==========================================
+# ARCHIVOS DE VISUAL STUDIO Y COMPILACIÓN
+# ==========================================
+# Ignorar carpetas ocultas de Visual Studio
+.vs/
+
+# Ignorar las carpetas donde se compilan los ejecutables (archivos pesados)
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+
+# Ignorar archivos de usuario y caché
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.log

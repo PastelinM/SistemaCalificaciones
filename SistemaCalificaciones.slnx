@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
+  </Folder>
+  <Project Path="SistemaCalificaciones.Core/SistemaCalificaciones.Core.csproj" />
+  <Project Path="SistemaCalificaciones.Data/SistemaCalificaciones.Data.csproj" />
+  <Project Path="SistemaCalificaciones.Services/SistemaCalificaciones.Services.csproj" />
+  <Project Path="SistemaCalificaciones.UI/SistemaCalificaciones.UI.csproj" />
+</Solution>

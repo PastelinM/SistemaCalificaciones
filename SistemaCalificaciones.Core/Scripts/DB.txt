@@ -1,0 +1,101 @@
+﻿-- ==========================================
+-- 1. CREACIÓN DE CATÁLOGOS (Tablas Padre)
+-- ==========================================
+
+CREATE TABLE institutos (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(150) NOT NULL UNIQUE,
+    domicilio VARCHAR(100) NOT NULL,
+    codigo_postal VARCHAR(100) NOT NULL,
+    referencia VARCHAR(200),
+    creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    estatus BOOLEAN DEFAULT true
+);
+
+CREATE TABLE categorias (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL UNIQUE,
+    porcentaje NUMERIC(5,2) NOT NULL CHECK(porcentaje >= 0 AND porcentaje <= 100),
+    estatus BOOLEAN DEFAULT true
+);
+
+CREATE TABLE periodos (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL UNIQUE,
+    estatus BOOLEAN DEFAULT true
+);
+
+CREATE TABLE materias (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL UNIQUE,
+    estatus BOOLEAN DEFAULT true
+);
+
+CREATE TABLE ciclos_escolares (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL UNIQUE,
+    estatus BOOLEAN DEFAULT true
+);
+
+-- ==========================================
+-- 2. CREACIÓN DE TABLAS PRINCIPALES E INTERMEDIAS
+-- ==========================================
+
+CREATE TABLE alumnos (
+    id SERIAL PRIMARY KEY,
+    instituto_id INTEGER NOT NULL,
+    matricula VARCHAR(50) NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
+    ap_paterno VARCHAR(100) NOT NULL,
+    ap_materno VARCHAR(100),
+    genero VARCHAR(10) NOT NULL CHECK (genero IN ('Masculino', 'Femenino')),   
+    grado INT NOT NULL,
+    grupo VARCHAR(10),
+    creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    estatus BOOLEAN DEFAULT true,
+    CONSTRAINT fk_instituto
+        FOREIGN KEY (instituto_id) 
+        REFERENCES institutos(id) 
+        ON DELETE RESTRICT,
+    UNIQUE(instituto_id, matricula) 
+);
+
+CREATE TABLE actividades (
+    id SERIAL PRIMARY KEY,
+    categoria_id INTEGER NOT NULL,
+    periodo_id INTEGER NOT NULL,
+    materia_id INTEGER NOT NULL,
+    ciclo_escolar_id INTEGER NOT NULL,
+    titulo VARCHAR(150) NOT NULL,
+    descripcion TEXT,
+    puntaje_maximo NUMERIC(5,2) DEFAULT 10.0 NOT NULL CHECK(puntaje_maximo > 0),
+    fecha_entrega DATE,
+    estatus BOOLEAN DEFAULT true,
+    CONSTRAINT fk_categoria
+        FOREIGN KEY (categoria_id) REFERENCES categorias(id) ON DELETE RESTRICT,
+    CONSTRAINT fk_periodo
+        FOREIGN KEY (periodo_id) REFERENCES periodos(id) ON DELETE RESTRICT,
+    CONSTRAINT fk_materia
+        FOREIGN KEY (materia_id) REFERENCES materias(id) ON DELETE RESTRICT,
+    CONSTRAINT fk_ciclo
+        FOREIGN KEY (ciclo_escolar_id) REFERENCES ciclos_escolares(id) ON DELETE RESTRICT
+);
+
+-- ==========================================
+-- 3. CREACIÓN DE TABLA TRANSACCIONAL FINAL
+-- ==========================================
+
+CREATE TABLE calificaciones (
+    id SERIAL PRIMARY KEY,
+    alumno_id INTEGER NOT NULL,
+    actividad_id INTEGER NOT NULL,
+    nota NUMERIC(5,2) NOT NULL CHECK(nota >= 0),
+    observaciones TEXT,
+    registrado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    estatus BOOLEAN DEFAULT true,
+    CONSTRAINT fk_alumno
+        FOREIGN KEY (alumno_id) REFERENCES alumnos(id) ON DELETE CASCADE,
+    CONSTRAINT fk_actividad
+        FOREIGN KEY (actividad_id) REFERENCES actividades(id) ON DELETE CASCADE,
+    UNIQUE(alumno_id, actividad_id)
+);
