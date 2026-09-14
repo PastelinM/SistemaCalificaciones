@@ -139,6 +139,7 @@
             actividadesToolStripMenuItem.Name = "actividadesToolStripMenuItem";
             actividadesToolStripMenuItem.Size = new Size(200, 30);
             actividadesToolStripMenuItem.Text = "Actividades";
+            actividadesToolStripMenuItem.Click += actividadesToolStripMenuItem_Click;
             // 
             // calificacionesToolStripMenuItem
             // 

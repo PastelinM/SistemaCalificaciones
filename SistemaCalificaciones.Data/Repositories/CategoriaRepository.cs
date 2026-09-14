@@ -48,7 +48,7 @@ namespace SistemaCalificaciones.Data.Repositories
         /// <summary>
         /// Obtiene únicamente las categorías activas (útil para llenar ComboBoxes en otros módulos).
         /// </summary>
-        public IEnumerable<Categoria> ObtenerActivas()
+        public IEnumerable<Categoria> ObtenerActivos()
         {
             using (var conexion = ConexionDB.ObtenerConexion())
             {
