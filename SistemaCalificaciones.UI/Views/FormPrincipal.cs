@@ -150,5 +150,14 @@ namespace SistemaCalificaciones.UI.Views
             ventanaPeriodos.ShowDialog();
 
         }
+
+        private void actividadesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // 1. Crear una instancia (un objeto) de la ventana que quieres abrir
+            FormActividades ventanaPeriodos = new FormActividades();
+
+            // 2. Mostrar la ventana en modo "Diálogo"
+            ventanaPeriodos.ShowDialog();
+        }
     }
 }
